@@ -10,20 +10,10 @@
 
 @implementation UITableView (FDTemplateLayoutHeaderFooterView)
 
-- (NSIndexPath *)fd_headerFooterViewCacheIndexForSection:(NSUInteger)section isHeader:(BOOL)isHeader {
-    if (section < 0) {
-        return nil;
-    }
-    return [NSIndexPath indexPathForRow:section inSection:isHeader ? 0 : 1];
-}
-
 - (id <NSCopying>)fd_headerFooterViewCacheKeyorSection:(NSUInteger)section isHeader:(BOOL)isHeader{
     
-    NSIndexPath *indexPath = [self fd_headerFooterViewCacheIndexForSection:section isHeader:isHeader];
-    if (nil == indexPath) {
-        return [NSString stringWithFormat:@"%@", NSStringFromSelector(_cmd)];
-    }
-    return [NSString stringWithFormat:@"%@_%ld_%ld", NSStringFromSelector(_cmd), (long)indexPath.section, (long)indexPath.row];
+
+    return [NSString stringWithFormat:@"%@_%ld_%ld", NSStringFromSelector(_cmd), (long)section, (long)isHeader];
 }
 
 - (CGFloat)fd_systemFittingHeightForConfiguratedHeaderFooterView:(UITableViewHeaderFooterView *)headerFooterView {
@@ -117,6 +107,7 @@
     if (!templateHeaderFooterView) {
         templateHeaderFooterView = [self dequeueReusableHeaderFooterViewWithIdentifier:identifier];
         NSAssert(templateHeaderFooterView != nil, @"HeaderFooterView must be registered to table view for identifier - %@", identifier);
+        templateHeaderFooterView.fd_isTemplateLayoutHeaderFooter = YES;
         templateHeaderFooterView.contentView.translatesAutoresizingMaskIntoConstraints = NO;
         templateHeaderFooterViews[identifier] = templateHeaderFooterView;
         [self fd_debugLog:[NSString stringWithFormat:@"layout header footer view created - %@", identifier]];

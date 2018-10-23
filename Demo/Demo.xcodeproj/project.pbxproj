@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		485DB89B1BAFFF8900CEAE33 /* UITableView+FDKeyedHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 485DB89A1BAFFF8900CEAE33 /* UITableView+FDKeyedHeightCache.m */; settings = {ASSET_TAGS = (); }; };
-		485DB89E1BB0004300CEAE33 /* UITableView+FDIndexPathHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 485DB89D1BB0004300CEAE33 /* UITableView+FDIndexPathHeightCache.m */; settings = {ASSET_TAGS = (); }; };
+		485DB89B1BAFFF8900CEAE33 /* UITableView+FDKeyedHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 485DB89A1BAFFF8900CEAE33 /* UITableView+FDKeyedHeightCache.m */; };
+		485DB89E1BB0004300CEAE33 /* UITableView+FDIndexPathHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 485DB89D1BB0004300CEAE33 /* UITableView+FDIndexPathHeightCache.m */; };
 		488EECB71ADFEDC6004EAA71 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 488EECB61ADFEDC6004EAA71 /* main.m */; };
 		488EECBA1ADFEDC6004EAA71 /* FDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 488EECB91ADFEDC6004EAA71 /* FDAppDelegate.m */; };
 		488EECC01ADFEDC6004EAA71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 488EECBE1ADFEDC6004EAA71 /* Main.storyboard */; };
@@ -20,6 +20,7 @@
 		48954A271B5102E200EFD15D /* UITableView+FDTemplateLayoutCellDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 48954A211B5102E200EFD15D /* UITableView+FDTemplateLayoutCellDebug.m */; };
 		4897E5DD1ADFFBBD00E87B5F /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 4897E5DC1ADFFBBD00E87B5F /* data.json */; };
 		4897E5E01AE090B900E87B5F /* FDFeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4897E5DF1AE090B900E87B5F /* FDFeedCell.m */; };
+		513D6301217F224F001CDF0E /* UITableView+FDTemplateLayoutHeaderFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 513D6300217F224E001CDF0E /* UITableView+FDTemplateLayoutHeaderFooterView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,8 @@
 		4897E5DC1ADFFBBD00E87B5F /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		4897E5DE1AE090B900E87B5F /* FDFeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDFeedCell.h; sourceTree = "<group>"; };
 		4897E5DF1AE090B900E87B5F /* FDFeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDFeedCell.m; sourceTree = "<group>"; };
+		513D62FF217F224E001CDF0E /* UITableView+FDTemplateLayoutHeaderFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDTemplateLayoutHeaderFooterView.h"; sourceTree = "<group>"; };
+		513D6300217F224E001CDF0E /* UITableView+FDTemplateLayoutHeaderFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutHeaderFooterView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +119,8 @@
 		48954A191B5102E200EFD15D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				513D62FF217F224E001CDF0E /* UITableView+FDTemplateLayoutHeaderFooterView.h */,
+				513D6300217F224E001CDF0E /* UITableView+FDTemplateLayoutHeaderFooterView.m */,
 				48954A1E1B5102E200EFD15D /* UITableView+FDTemplateLayoutCell.h */,
 				48954A1F1B5102E200EFD15D /* UITableView+FDTemplateLayoutCell.m */,
 				485DB8991BAFFF8900CEAE33 /* UITableView+FDKeyedHeightCache.h */,
@@ -201,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				488EECBA1ADFEDC6004EAA71 /* FDAppDelegate.m in Sources */,
+				513D6301217F224F001CDF0E /* UITableView+FDTemplateLayoutHeaderFooterView.m in Sources */,
 				48954A261B5102E200EFD15D /* UITableView+FDTemplateLayoutCell.m in Sources */,
 				48954A271B5102E200EFD15D /* UITableView+FDTemplateLayoutCellDebug.m in Sources */,
 				488EECE01ADFF7A5004EAA71 /* FDFeedViewController.m in Sources */,

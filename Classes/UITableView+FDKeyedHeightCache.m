@@ -22,10 +22,9 @@
 
 #import "UITableView+FDKeyedHeightCache.h"
 #import <objc/runtime.h>
-
 @interface FDKeyedHeightCache ()
-@property (nonatomic, strong) NSMutableDictionary<id<NSCopying>, NSNumber *> *mutableHeightsByKeyForPortrait;
-@property (nonatomic, strong) NSMutableDictionary<id<NSCopying>, NSNumber *> *mutableHeightsByKeyForLandscape;
+@property (nonatomic, strong) NSCache<id<NSCopying>, NSNumber *> *mutableHeightsByKeyForPortrait;
+@property (nonatomic, strong) NSCache<id<NSCopying>, NSNumber *> *mutableHeightsByKeyForLandscape;
 @end
 
 @implementation FDKeyedHeightCache
@@ -33,30 +32,30 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _mutableHeightsByKeyForPortrait = [NSMutableDictionary dictionary];
-        _mutableHeightsByKeyForLandscape = [NSMutableDictionary dictionary];
+        _mutableHeightsByKeyForPortrait = [NSCache new];
+        _mutableHeightsByKeyForLandscape = [NSCache new];
     }
     return self;
 }
 
-- (NSMutableDictionary<id<NSCopying>, NSNumber *> *)mutableHeightsByKeyForCurrentOrientation {
+- (NSCache<id<NSCopying>, NSNumber *> *)mutableHeightsByKeyForCurrentOrientation {
     return UIDeviceOrientationIsPortrait([UIDevice currentDevice].orientation) ? self.mutableHeightsByKeyForPortrait: self.mutableHeightsByKeyForLandscape;
 }
 
 - (BOOL)existsHeightForKey:(id<NSCopying>)key {
-    NSNumber *number = self.mutableHeightsByKeyForCurrentOrientation[key];
+    NSNumber *number = [self.mutableHeightsByKeyForCurrentOrientation objectForKey:key];
     return number && ![number isEqualToNumber:@-1];
 }
 
 - (void)cacheHeight:(CGFloat)height byKey:(id<NSCopying>)key {
-    self.mutableHeightsByKeyForCurrentOrientation[key] = @(height);
+    [self.mutableHeightsByKeyForCurrentOrientation setObject:@(height) forKey:key];
 }
 
 - (CGFloat)heightForKey:(id<NSCopying>)key {
 #if CGFLOAT_IS_DOUBLE
-    return [self.mutableHeightsByKeyForCurrentOrientation[key] doubleValue];
+    return [[self.mutableHeightsByKeyForCurrentOrientation objectForKey:key] doubleValue];
 #else
-    return [self.mutableHeightsByKeyForCurrentOrientation[key] floatValue];
+    return [[self.mutableHeightsByKeyForCurrentOrientation objectForKey:key] floatValue];
 #endif
 }
 

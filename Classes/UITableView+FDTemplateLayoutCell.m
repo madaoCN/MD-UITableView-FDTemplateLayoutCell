@@ -78,14 +78,14 @@
         NSLayoutConstraint *widthFenceConstraint = [NSLayoutConstraint constraintWithItem:cell.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:contentViewWidth];
 
         // [bug fix] after iOS 10.3, Auto Layout engine will add an additional 0 width constraint onto cell's content view, to avoid that, we add constraints to content view's left, right, top and bottom.
-        static BOOL isSystemVersionEqualOrGreaterThen10_2 = NO;
+        static BOOL isSystemVersionEqualOrGreaterThan10_2 = NO;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            isSystemVersionEqualOrGreaterThen10_2 = [UIDevice.currentDevice.systemVersion compare:@"10.2" options:NSNumericSearch] != NSOrderedAscending;
+            isSystemVersionEqualOrGreaterThan10_2 = [UIDevice.currentDevice.systemVersion compare:@"10.2" options:NSNumericSearch] != NSOrderedAscending;
         });
         
         NSArray<NSLayoutConstraint *> *edgeConstraints;
-        if (isSystemVersionEqualOrGreaterThen10_2) {
+        if (isSystemVersionEqualOrGreaterThan10_2) {
             // To avoid confilicts, make width constraint softer than required (1000)
             widthFenceConstraint.priority = UILayoutPriorityRequired - 1;
             
@@ -105,7 +105,7 @@
         
         // Clean-ups
         [cell.contentView removeConstraint:widthFenceConstraint];
-        if (isSystemVersionEqualOrGreaterThen10_2) {
+        if (isSystemVersionEqualOrGreaterThan10_2) {
             [cell removeConstraints:edgeConstraints];
         }
         
@@ -219,47 +219,6 @@
     [self fd_debugLog:[NSString stringWithFormat:@"cached by key[%@] - %@", key, @(height)]];
     
     return height;
-}
-
-@end
-
-@implementation UITableView (FDTemplateLayoutHeaderFooterView)
-
-- (__kindof UITableViewHeaderFooterView *)fd_templateHeaderFooterViewForReuseIdentifier:(NSString *)identifier {
-    NSAssert(identifier.length > 0, @"Expect a valid identifier - %@", identifier);
-    
-    NSMutableDictionary<NSString *, UITableViewHeaderFooterView *> *templateHeaderFooterViews = objc_getAssociatedObject(self, _cmd);
-    if (!templateHeaderFooterViews) {
-        templateHeaderFooterViews = @{}.mutableCopy;
-        objc_setAssociatedObject(self, _cmd, templateHeaderFooterViews, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    
-    UITableViewHeaderFooterView *templateHeaderFooterView = templateHeaderFooterViews[identifier];
-    
-    if (!templateHeaderFooterView) {
-        templateHeaderFooterView = [self dequeueReusableHeaderFooterViewWithIdentifier:identifier];
-        NSAssert(templateHeaderFooterView != nil, @"HeaderFooterView must be registered to table view for identifier - %@", identifier);
-        templateHeaderFooterView.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-        templateHeaderFooterViews[identifier] = templateHeaderFooterView;
-        [self fd_debugLog:[NSString stringWithFormat:@"layout header footer view created - %@", identifier]];
-    }
-    
-    return templateHeaderFooterView;
-}
-
-- (CGFloat)fd_heightForHeaderFooterViewWithIdentifier:(NSString *)identifier configuration:(void (^)(id))configuration {
-    UITableViewHeaderFooterView *templateHeaderFooterView = [self fd_templateHeaderFooterViewForReuseIdentifier:identifier];
-    
-    NSLayoutConstraint *widthFenceConstraint = [NSLayoutConstraint constraintWithItem:templateHeaderFooterView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:CGRectGetWidth(self.frame)];
-    [templateHeaderFooterView addConstraint:widthFenceConstraint];
-    CGFloat fittingHeight = [templateHeaderFooterView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-    [templateHeaderFooterView removeConstraint:widthFenceConstraint];
-    
-    if (fittingHeight == 0) {
-        fittingHeight = [templateHeaderFooterView sizeThatFits:CGSizeMake(CGRectGetWidth(self.frame), 0)].height;
-    }
-    
-    return fittingHeight;
 }
 
 @end

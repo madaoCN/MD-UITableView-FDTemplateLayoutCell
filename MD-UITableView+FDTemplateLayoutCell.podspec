@@ -1,9 +1,9 @@
 
 Pod::Spec.new do |s|
   s.name         = "MD-UITableView+FDTemplateLayoutCell"
-  s.version      = "1.7"
+  s.version      = "1.8"
   s.summary      = "Add UITableHeaderFooterView Support, Template auto layout cell for automatically UITableViewCell height calculate, cache and precache"
-  s.description  = "Template auto layout cell for automatically UITableViewCell height calculate, cache and precache. Requires a `self-satisfied` UITableViewCell, using system's `- systemLayoutSizeFittingSize:`, provides heights caching."
+  s.description  = "Add UITableHeaderFooterView Support, Template auto layout cell for automatically UITableViewCell height calculate, cache and precache. Requires a `self-satisfied` UITableViewCell, using system's `- systemLayoutSizeFittingSize:`, provides heights caching."
   s.homepage     = "https://github.com/madaoCN/MD-UITableView-FDTemplateLayoutCell"
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

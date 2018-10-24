@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// same with "-fd_heightForCellWithIdentifier:configuration:", it will call "-sizeThatFits:" for
 /// subclass of UITableViewHeaderFooterView which is not using Auto Layout.
 ///
-- (CGFloat)fd_heightForHeaderFooterViewWithIdentifier:(NSString *)identifier cacheBySection:(NSUInteger)section isHeader:(BOOL)isHeader configuration:(void (^)(id headerFooterView))configuration;
+- (CGFloat)fd_heightForHeaderFooterViewWithIdentifier:(NSString *)identifier cacheBySection:(NSInteger)section isHeader:(BOOL)isHeader configuration:(void (^)(id headerFooterView))configuration;
 
 
 /// This method caches height by your model entity's identifier.

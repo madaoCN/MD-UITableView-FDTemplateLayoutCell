@@ -10,7 +10,7 @@
 
 @implementation UITableView (FDTemplateLayoutHeaderFooterView)
 
-- (id <NSCopying>)fd_headerFooterViewCacheKeyorSection:(NSUInteger)section isHeader:(BOOL)isHeader{
+- (id <NSCopying>)fd_headerFooterViewCacheKeyorSection:(NSInteger)section isHeader:(BOOL)isHeader{
     
 
     return [NSString stringWithFormat:@"%@_%ld_%ld", NSStringFromSelector(_cmd), (long)section, (long)isHeader];
@@ -59,11 +59,10 @@
         }
         
         [headerFooterView.contentView addConstraint:widthFenceConstraint];
-
+        
         // Auto layout engine does its math
         fittingHeight = [headerFooterView.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
         
-
         // Clean-ups
         [headerFooterView.contentView removeConstraint:widthFenceConstraint];
         if (isSystemVersionEqualOrGreaterThan10_2) {
@@ -130,14 +129,14 @@
     return [self fd_systemFittingHeightForConfiguratedHeaderFooterView:templateHeaderFooterView];
 }
 
-- (CGFloat)fd_heightForHeaderFooterViewWithIdentifier:(NSString *)identifier cacheBySection:(NSUInteger)section isHeader:(BOOL)isHeader configuration:(void (^)(id headerFooterView))configuration {
+- (CGFloat)fd_heightForHeaderFooterViewWithIdentifier:(NSString *)identifier cacheBySection:(NSInteger)section isHeader:(BOOL)isHeader configuration:(void (^)(id headerFooterView))configuration {
     
     if (!identifier && section < 0) {
         return 0;
     }
     
     // Hit Cache
-    return [self fd_heightForHeaderFooterViewWithIdentifier:[NSString stringWithFormat:@"%@", [self fd_headerFooterViewCacheKeyorSection:section isHeader:isHeader]] configuration:configuration];
+    return [self fd_heightForHeaderFooterViewWithIdentifier:identifier cacheByKey:[NSString stringWithFormat:@"%@", [self fd_headerFooterViewCacheKeyorSection:section isHeader:isHeader]] configuration:configuration];
 }
 
 - (CGFloat)fd_heightForHeaderFooterViewWithIdentifier:(NSString *)identifier cacheByKey:(id<NSCopying>)key configuration:(void (^)(id headerFooterView))configuration {
@@ -152,8 +151,7 @@
         [self fd_debugLog:[NSString stringWithFormat:@"hit cache by key[%@] - %@", key, @(cachedHeight)]];
         return cachedHeight;
     }
-    
-    
+
     CGFloat height = [self fd_heightForHeaderFooterViewWithIdentifier:identifier configuration:configuration];
     [self.fd_keyedHeightCache cacheHeight:height byKey:key];
     [self fd_debugLog:[NSString stringWithFormat:@"cached by key[%@] - %@", key, @(height)]];
@@ -164,7 +162,7 @@
 @end
 
 
-@implementation UITableViewCell (FDTemplateLayoutHeaderFooterView)
+@implementation UITableViewHeaderFooterView (FDTemplateLayoutHeaderFooterView)
 
 - (BOOL)fd_isTemplateLayoutHeaderFooter {
     return [objc_getAssociatedObject(self, _cmd) boolValue];
